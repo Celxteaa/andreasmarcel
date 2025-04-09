@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+
+    <title>Andreas Marcelino Y</title>
+
+    <style>
+    .container {
+        animation: fadeIn 1.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+        .password-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(45deg, #aaebff, #a0b2ff);
+        }
+
+        .password-box {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 350px;
+        }
+
+        .password-box h1 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #444;
+        }
+
+        .password-box input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        .password-box button {
+            display: block;
+            margin: 0 auto;
+            width: 100%;
+            padding: 12px;
+            background: blue;
+            color: #fff;
+            border: none;
+            border-radius: 8px; /* Match the container's border radius */
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Match the container's shadow */
+        }
+
+        .password-box button:hover {
+            background: linear-gradient(45deg, #002efc, #008eb9);
+            transform: scale(1.05); 
+        }
+
+        .password-box button:active {
+            transform: scale(1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+
+        .main-content {
+            display: none; /* Hide main content */
+        }
+    </style>
+</head>
+<body>
+    <!-- Password Protection -->
+    <div class="password-container" id="password-container">
+        <div class="password-box">
+            <h1>Password Protected</h1>
+            <p>Before accessing my website, please enter the password</p>
+            <input type="password" id="password" placeholder="Enter Password">
+            <button onclick="checkPassword()">Submit</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+     <div class="main-content" id="main-content">
+    <nav class="top">
+        
+        <div class="dropdownBackground">
+          <span class="arrow"></span>
+        </div>
+    
+        <ul class="wrapper">
+          <li>
+            <a href="#">About</a>
+            <div class="dropdown dropdown1">
+              <div class="bio">
+                
+                <p>Active student at Open University majoring in Information System. I am passionate about web development and I'm always eager to expand my knowledge</p>
+              </div>
+            </div>
+          </li>
+          <li>
+            <a href="#">Certifications</a>
+            <ul class="dropdown projects">
+              <li>
+                <a href="https://coursera.org/share/a9179e2a500b1028f33ba38f8c6e38c1">Google IT Support Professional Certificate</a>
+              </li>
+              <li>
+                <a href="https://api.accredible.com/v1/frontend/credential_website_embed_image/certificate/139071483">Google Play Academy - Store Listing Certificate</a>
+              </li>
+            </ul>
+              
+          </li>
+          <li>
+            <a href="#">Projects</a>
+            <ul class="dropdown projects">
+              <li>
+                <a href="https://tokosapto.eu.org">Toko Sapto</a>
+              </li>
+            </ul>
+          </li>
+            <li>
+            <a href="#">Social</a>
+            <ul class="dropdown dropdown3">
+
+              <div class="badge-base LI-profile-badge" data-locale="in_ID" data-size="small" data-theme="light" data-type="HORIZONTAL" data-vanity="andreas-marcelino-yuwana" data-version="v1"><a class="badge-base__link LI-simple-link" href="https://id.linkedin.com/in/andreas-marcelino-yuwana?trk=profile-badge"></a></div>
+                    </p>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      
+      
+      <div class="container" style="padding-top: 10%; padding-bottom: 10%;">
+        <a style="color: #fff;" href="./profile/marcel.html">
+        <h1 class="title">My Profile</h1>
+        </a>
+        
+        <a class="to" href="https://dott.bio/andreasmarcel">
+          <button>dott.bio</button>
+        </a>
+
+        <a class="to" href="contact.html">
+          <button style="background-color: #ff0000;">Contact</button>
+        </a>
+        
+        </div>
+        
+
+        <footer>
+        <p>Marcel &copy; <span id="year"></span></p>
+        <p>Current Time: <span id="live-time"></span></p>
+        </footer>
+    </div>
+
+      <script src="script.js"></script>
+
+      <script src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></script>
+    
+      <script>
+        // Function to update the live time
+        function updateLiveTime() {
+        const timeElement = document.getElementById("live-time");
+        const now = new Date();
+        const time = now.toLocaleTimeString();
+        timeElement.textContent = time;
+        }
+
+        // Function to set the current year
+        function setCurrentYear() {
+        const yearElement = document.getElementById("year");
+        yearElement.textContent = new Date().getFullYear();
+        }
+
+        // Initialize the live time and year
+        setCurrentYear();
+        setInterval(updateLiveTime, 1000);
+      </script>
+
+
+<script>
+  function setCookie(name, value, days) {
+      const date = new Date();
+      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000)); // Set expiration in days
+      const expires = "expires=" + date.toUTCString();
+      document.cookie = name + "=" + value + ";" + expires + ";path=/";
+  }
+
+  function getCookie(name) {
+      const nameEQ = name + "=";
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+          let cookie = cookies[i].trim();
+          if (cookie.indexOf(nameEQ) === 0) {
+              return cookie.substring(nameEQ.length, cookie.length);
+          }
+      }
+      return null;
+  }
+
+  function checkPassword() {
+      const password = document.getElementById("password").value;
+      const correctPassword = "celxpass"; // password
+
+      if (password === correctPassword) {
+          // Store a flag in localStorage to indicate the user has entered the correct password
+          localStorage.setItem("accessGranted", "true");
+
+          // Set a cookie to track the user
+          setCookie("userAccess", "granted", 1); // Cookie valid for 1 days
+
+          // Create a loading screen
+          const loadingScreen = document.createElement("div");
+          loadingScreen.id = "loading-screen";
+          loadingScreen.style.position = "fixed";
+          loadingScreen.style.top = "0";
+          loadingScreen.style.left = "0";
+          loadingScreen.style.width = "100%";
+          loadingScreen.style.height = "100%";
+          loadingScreen.style.background = "rgba(0, 0, 0, 0.9)";
+          loadingScreen.style.color = "#fff";
+          loadingScreen.style.display = "flex";
+          loadingScreen.style.justifyContent = "center";
+          loadingScreen.style.alignItems = "center";
+          loadingScreen.style.fontSize = "24px";
+          loadingScreen.style.zIndex = "1000";
+
+          // Add text element for typing effect
+          const textElement = document.createElement("div");
+          textElement.id = "loading-text";
+          textElement.style.textAlign = "center";
+          loadingScreen.appendChild(textElement);
+          document.body.appendChild(loadingScreen);
+
+          // Words to cycle through
+          const words = ["Loading...", "Welcome Back", "Andreas Marcelino Y"];
+          let wordIndex = 0;
+          let charIndex = 0;
+          let isDeleting = false;
+
+          function typeEffect() {
+              const currentWord = words[wordIndex];
+              if (isDeleting) {
+                  charIndex--;
+              } else {
+                  charIndex++;
+              }
+
+              textElement.textContent = currentWord.substring(0, charIndex);
+
+              if (!isDeleting && charIndex === currentWord.length) {
+                  isDeleting = true;
+                  setTimeout(typeEffect, 1000); // Pause before deleting
+              } else if (isDeleting && charIndex === 0) {
+                  isDeleting = false;
+                  wordIndex = (wordIndex + 1) % words.length; // Move to the next word
+                  setTimeout(typeEffect, 500); // Pause before typing the next word
+              } else {
+                  setTimeout(typeEffect, 100); // Typing speed
+              }
+          }
+
+          typeEffect();
+
+          // Simulate a delay before showing the main content
+          setTimeout(() => {
+              document.body.removeChild(loadingScreen);
+              document.getElementById("password-container").style.display = "none";
+              document.getElementById("main-content").style.display = "block";
+          }, 5000); // 5-second delay
+      } else {
+          // Create a custom alert box
+          const alertBox = document.createElement("div");
+          alertBox.style.position = "fixed";
+          alertBox.style.top = "50%";
+          alertBox.style.left = "50%";
+          alertBox.style.transform = "translate(-50%, -50%)";
+          alertBox.style.background = "#ff4d4d";
+          alertBox.style.color = "#fff";
+          alertBox.style.padding = "20px";
+          alertBox.style.borderRadius = "8px";
+          alertBox.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.2)";
+          alertBox.style.textAlign = "center";
+          alertBox.style.zIndex = "1000";
+
+          const alertMessage = document.createElement("p");
+          alertMessage.textContent = "Incorrect password. Please try again.";
+          alertMessage.style.margin = "0 0 10px";
+
+          const closeButton = document.createElement("button");
+          closeButton.textContent = "Close";
+          closeButton.style.background = "#fff";
+          closeButton.style.color = "#ff4d4d";
+          closeButton.style.border = "none";
+          closeButton.style.padding = "10px 20px";
+          closeButton.style.borderRadius = "4px";
+          closeButton.style.cursor = "pointer";
+          closeButton.style.fontWeight = "bold";
+
+          closeButton.addEventListener("click", () => {
+              document.body.removeChild(alertBox);
+          });
+
+          alertBox.appendChild(alertMessage);
+          alertBox.appendChild(closeButton);
+          document.body.appendChild(alertBox);
+      }
+  }
+
+  // Check if the user has already entered the correct password or has a valid cookie
+  window.onload = function () {
+      if (localStorage.getItem("accessGranted") === "true" || getCookie("userAccess") === "granted") {
+          document.getElementById("password-container").style.display = "none";
+          document.getElementById("main-content").style.display = "block";
+      }
+  };
+</script>
+
+</body>
+</html>
