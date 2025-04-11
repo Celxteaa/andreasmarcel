@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 
     <title>Andreas Marcelino Y</title>
@@ -104,55 +105,173 @@
      <div class="main-content" id="main-content">
     <nav class="top">
         
-        <div class="dropdownBackground">
-          <span class="arrow"></span>
+      <!-- nav -->
+      <nav class="navbar">
+        <div class="navbar-container">
+            <a href="#" class="navbar-logo" style="font-size: 24px; font-weight: bold; color: #ffffff; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); transition: background-color 0.3s ease;">
+              <i class="fas fa-home"></i>
+            </a>
+            <style>
+              .navbar-logo:hover {
+                background-color: rgba(255, 255, 255, 0.2);
+                border-radius: 4px;
+              }
+            </style>
+          <div class="navbar-toggler" id="navbar-toggler">
+        <span></span>
+        <span></span>
+        <span></span>
+          </div>
+          <ul class="navbar-menu" id="navbar-menu">
+        <li><a href="./my_file.html"><i class="fas fa-file"></i> My File</a></li>
+        <li><a href="./about/profile.html"><i class="fas fa-user"></i> Profile</a></li>
+        <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+        <li><a href="lab.html"><i class="fas fa-flask"></i> Lab</a></li>
+          </ul>
         </div>
-    
-        <ul class="wrapper">
-          <li>
-            <a href="#">About</a>
-            <div class="dropdown dropdown1">
-              <div class="bio">
-                
-                <p>Active student at Open University majoring in Information System. I am passionate about web development and I'm always eager to expand my knowledge</p>
-              </div>
-            </div>
-          </li>
-          <li>
-            <a href="#">Certifications</a>
-            <ul class="dropdown projects">
-              <li>
-                <a href="https://coursera.org/share/a9179e2a500b1028f33ba38f8c6e38c1">Google IT Support Professional Certificate</a>
-              </li>
-              <li>
-                <a href="https://api.accredible.com/v1/frontend/credential_website_embed_image/certificate/139071483">Google Play Academy - Store Listing Certificate</a>
-              </li>
-            </ul>
-              
-          </li>
-          <li>
-            <a href="#">Projects</a>
-            <ul class="dropdown projects">
-              <li>
-                <a href="https://tokosapto.eu.org">Toko Sapto</a>
-              </li>
-            </ul>
-          </li>
-            <li>
-            <a href="#">Social</a>
-            <ul class="dropdown dropdown3">
-
-              <div class="badge-base LI-profile-badge" data-locale="in_ID" data-size="small" data-theme="light" data-type="HORIZONTAL" data-vanity="andreas-marcelino-yuwana" data-version="v1"><a class="badge-base__link LI-simple-link" href="https://id.linkedin.com/in/andreas-marcelino-yuwana?trk=profile-badge"></a></div>
-                    </p>
-            </ul>
-          </li>
-        </ul>
       </nav>
+      
+      <style>
+      /* Navbar Styles */
+      .navbar {
+        background-color: #060061;
+        color: #fff;
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+      }
+      
+      .navbar-container {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        justify-content: space-between;
+      }
+      
+      .navbar-logo {
+        font-size: 20px;
+        font-weight: bold;
+        color: #fff;
+        text-decoration: none;
+      }
+      
+      .navbar-toggler {
+        display: none;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 25px;
+        height: 20px;
+        cursor: pointer;
+      }
+      
+      .navbar-toggler span {
+        display: block;
+        height: 3px;
+        background-color: #fff;
+        border-radius: 2px;
+        transition: all 0.3s ease;
+      }
+      
+      .navbar-menu {
+        display: flex;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      
+      .navbar-menu li {
+        margin: 0 10px;
+      }
+      
+      .navbar-menu a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+      }
+      
+      .navbar-menu a i {
+        margin-right: 5px;
+      }
+      
+      /* Align toggler and menu to the right */
+      .navbar-toggler,
+      .navbar-menu {
+        margin-left: auto;
+      }
+      
+      /* Responsive Styles */
+      @media (max-width: 768px) {
+        .navbar-toggler {
+          display: flex;
+        }
+      
+        .navbar-menu {
+          display: none;
+          flex-direction: column;
+          position: absolute;
+          top: 100%;
+          right: 0;
+          width: 100%;
+          background-color: #002364;
+          padding: 10px 0;
+          animation: slideDown 0.3s ease;
+        }
+      
+        .navbar-menu.active {
+          display: flex;
+        }
+      
+        .navbar-menu li {
+          margin: 10px 0;
+          text-align: center;
+        }
+      }
+      
+      /* Toggler Animation */
+      .navbar-toggler.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+      }
+      
+      .navbar-toggler.active span:nth-child(2) {
+        opacity: 0;
+      }
+      
+      .navbar-toggler.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+      }
+      
+      /* Slide Down Animation */
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      </style>
+      
+      <script>
+      document.getElementById("navbar-toggler").addEventListener("click", function () {
+        const menu = document.getElementById("navbar-menu");
+        const toggler = document.getElementById("navbar-toggler");
+        menu.classList.toggle("active");
+        toggler.classList.toggle("active");
+      });
+      </script>
+      <!-- nav -->
+          
       
       
       <div class="container" style="padding-top: 10%; padding-bottom: 10%;">
-        <a style="color: #fff;" href="./profile/marcel.html">
-        <h1 class="title">My Profile</h1>
+        <a style="color: #fff;" href="./about/profile.html">
+        <h1 class="title">Command Prompt Profile</h1>
         </a>
         
         <a class="to" href="https://dott.bio/andreasmarcel">

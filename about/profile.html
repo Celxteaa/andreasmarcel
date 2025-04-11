@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <style>
+        body {
+            background-color: black;
+            color: lime;
+            font-family: monospace;
+            margin: 0;
+            padding: 20px;
+        }
+        #command-line {
+            white-space: pre-wrap;
+            overflow-wrap: break-word;
+        }
+        .blinking-cursor {
+            display: inline-block;
+            width: 10px;
+            height: 20px;
+            background-color: lime;
+            animation: blink 1s steps(2, start)infinite;
+        }
+        @keyframes blink {
+            50% {
+                background-color: transparent;
+            }
+        }
+        .profile {
+            margin-top: 20px;
+            text-align: center;
+            display: none; /* Initially hidden */
+        }
+        
+        .profile h1 {
+            margin: 10px 0 5px;
+            font-size: 24px;
+        }
+        .profile p {
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="command-line"></div>
+    <div class="blinking-cursor"></div>
+
+    <div class="profile" id="profile">
+        <h1 style="color: azure;">Andreas Marcelino Yuwana</h1>
+        <p style="color: azure;">Web Developer | Tech Enthusiast</p>
+
+    <!-- Add input and output command prompt -->
+<div id="command-prompt" style="display: none; margin-top: 20px;">
+    <label for="user-input" style="color: rgb(255, 255, 255);">User $ </label>
+    <input id="user-input" type="text" style="background-color: rgb(88, 87, 87); color: rgb(255, 255, 255); border: none; outline: none; font-family: monospace; width: 80%;" />
+    <div id="output" style="margin-top: 10px; color: rgb(255, 255, 255);"></div>
+</div>
+
+<!-- Modal for displaying the certificate -->
+<div id="certificate-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); justify-content: center; align-items: center; z-index: 1000;">
+    <img id="modal-image" src="" alt="Certificate" style="max-width: 90%; max-height: 90%; border: 2px solid white;">
+    <button id="close-modal" style="position: absolute; top: 20px; right: 20px; background-color: red; color: white; border: none; padding: 10px; cursor: pointer;">Close</button>
+</div>
+
+<div id="certificates" style="display: none; margin-top: 20px; text-align: center;">
+    <h2 style="color: azure;">Certificates</h2>
+    <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+        <div style="width: 220px; height: 150px; background-color: rgb(88, 87, 87); border: 2px solid white; display: flex; align-items: center; justify-content: center; cursor: pointer;" onclick="showCertificate('https://s3.amazonaws.com/coursera_assets/meta_images/generated/CERTIFICATE_LANDING_PAGE/CERTIFICATE_LANDING_PAGE~ZFEVL8KAJ7U1/CERTIFICATE_LANDING_PAGE~ZFEVL8KAJ7U1.jpeg')">
+            <img src="https://s3.amazonaws.com/coursera_assets/meta_images/generated/CERTIFICATE_LANDING_PAGE/CERTIFICATE_LANDING_PAGE~ZFEVL8KAJ7U1/CERTIFICATE_LANDING_PAGE~ZFEVL8KAJ7U1.jpeg" alt="Certificate 1" style="max-width: 100%; max-height: 100%;">
+        </div>
+        <div style="width: 220px; height: 150px; background-color: rgb(88, 87, 87); border: 2px solid white; display: flex; align-items: center; justify-content: center; cursor: pointer;" onclick="showCertificate('https://api.accredible.com/v1/frontend/credential_website_embed_image/certificate/139071483')">
+            <img src="https://api.accredible.com/v1/frontend/credential_website_embed_image/certificate/139071483" alt="Certificate 2" style="max-width: 100%; max-height: 100%;">
+        </div>
+        <div style="width: 220px; height: 150px; background-color: rgb(88, 87, 87); border: 2px solid white; display: flex; align-items: center; justify-content: center; cursor: pointer;" onclick="showCertificate('cert3.jpg')">
+            <img src="cert3.jpg" alt="Certificate 3" style="max-width: 100%; max-height: 100%;">
+        </div>
+    </div>
+</div>
+
+<!-- Password Modal -->
+<div id="password-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); justify-content: center; align-items: center; z-index: 1000;">
+    <div style="background-color: #222; padding: 20px; border-radius: 8px; text-align: center; width: 300px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+        <h3 style="color: lime; margin-bottom: 15px;">Enter Password</h3>
+        <p style="color: azure;">before access my cv, please enter the password</p>
+        <input id="password-input" type="password" placeholder="Enter password" 
+       style="width: calc(100% - 20px); padding: 10px; margin: 10px 0; border: 1px solid #555; 
+              border-radius: 4px; background-color: #333; color: lime; font-family: monospace; 
+              box-sizing: border-box;" />
+        <div style="margin-top: 15px;">
+            <button id="submit-password" style="padding: 10px 20px; background-color: lime; color: black; border: none; border-radius: 4px; cursor: pointer; font-family: monospace;">Submit</button>
+            <button id="cancel-password" style="padding: 10px 20px; background-color: red; color: white; border: none; border-radius: 4px; cursor: pointer; font-family: monospace; margin-left: 10px;">Cancel</button>
+        </div>
+        <p id="password-error" style="color: red; display: none; margin-top: 10px; font-size: 14px;">Incorrect password. Try again.</p>
+    </div>
+</div>
+
+
+
+<script>
+    const commands = [
+        "Initializing...",
+        "Connecting to server...",
+        "Get Profile...",
+        "Process complete!"
+    ];
+
+    const commandLine = document.getElementById("command-line");
+    const profile = document.getElementById("profile");
+    const blinkingCursor = document.querySelector(".blinking-cursor");
+    const commandPrompt = document.getElementById("command-prompt");
+    const userInput = document.getElementById("user-input");
+    const output = document.getElementById("output");
+    const certificates = document.getElementById("certificates");
+    let commandIndex = 0;
+
+    function typeCommand(command, callback) {
+        let i = 0;
+        const interval = setInterval(() => {
+            commandLine.textContent += command[i];
+            i++;
+            if (i === command.length) {
+                clearInterval(interval);
+                commandLine.textContent += "\n";
+                callback();
+            }
+        }, 100);
+    }
+
+    function executeCommands() {
+        if (commandIndex < commands.length) {
+            typeCommand(commands[commandIndex], () => {
+                commandIndex++;
+                executeCommands();
+            });
+        } else {
+            // Show the profile section after all commands are executed
+            profile.style.display = "block";
+
+            // Clear the command line
+            commandLine.textContent = "";
+
+            // Remove the blinking cursor
+            blinkingCursor.remove();
+
+            // Show the command prompt
+            commandPrompt.style.display = "block";
+
+            // Focus on the input field
+            userInput.focus();
+        }
+    }
+
+    // Handle user input
+    userInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+            const input = userInput.value.trim().toLowerCase();
+            if (input) {
+                // Hide certificates when a new command is entered
+                certificates.style.display = "none";
+
+                // Process the command
+                let response;
+                switch (input) {
+                    case "help":
+                        response = "Available commands: help, about, email, cv (download), certi, clear, back ";
+                        break;
+                    case "about":
+                        response = "Andreas Marcelino Y, Active student at Open University majoring in Information System. I am passionate about web development and I'm always eager to expand my knowledge ";
+                        break;
+                    case "certi":
+                        certificates.style.display = "block";
+                        break;
+                    case "clear":
+                        output.textContent = "";
+                        userInput.value = "";
+                        certificates.style.display = "none"; // Hide certificates
+                        return;
+                    case "back":
+                        window.location.href = "../index.html"; // Redirect to index.html
+                        return;
+                    case "cv":
+                        passwordModal.style.display = "flex"; // Show the modal
+                        return;
+                        break;
+                    case "email":
+                        window.location.href = "mailto:andreasmarcel@proton.me";
+                        response = "Opening your email client...";
+                        break;
+                    default:
+                        response = `Unknown command: ${input}. Type 'help' for a list of commands.`;
+                }
+                output.textContent = response;
+                userInput.value = "";
+            }
+        }
+    });
+
+    // Function to download a file
+    function downloadFile(fileName, fileUrl) {
+        const link = document.createElement("a");
+        link.href = fileUrl;
+        link.download = fileName;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+
+    executeCommands();
+</script>
+
+<script>
+    const modal = document.getElementById("certificate-modal");
+    const modalImage = document.getElementById("modal-image");
+    const closeModal = document.getElementById("close-modal");
+
+    // Function to show the certificate in a modal
+    function showCertificate(imageSrc) {
+        modalImage.src = imageSrc;
+        modal.style.display = "flex";
+    }
+
+    // Close the modal when the close button is clicked
+    closeModal.addEventListener("click", () => {
+        modal.style.display = "none";
+    });
+
+    // Close the modal when clicking outside the image
+    modal.addEventListener("click", (event) => {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    });
+</script>
+
+<script>
+    // Modal Elements
+const passwordModal = document.getElementById("password-modal");
+const passwordInput = document.getElementById("password-input");
+const submitPassword = document.getElementById("submit-password");
+const cancelPassword = document.getElementById("cancel-password");
+const passwordError = document.getElementById("password-error");
+
+// Handle Password Submission
+submitPassword.addEventListener("click", () => {
+    const password = passwordInput.value.trim();
+    if (password === "celxpass") { // Replace with your actual password
+        downloadFile("Andreas_Marcelino_CV.pdf", "../cv/andreasmarcelCV.pdf");
+        passwordModal.style.display = "none";
+        passwordInput.value = "";
+        passwordError.style.display = "none";
+        output.textContent = "Downloading CV...";
+    } else {
+        passwordError.style.display = "block"; // Show error message
+    }
+});
+
+// Handle Modal Cancel
+cancelPassword.addEventListener("click", () => {
+    passwordModal.style.display = "none";
+    passwordInput.value = "";
+    passwordError.style.display = "none";
+});
+</script>
+
+</body>
+</html>
