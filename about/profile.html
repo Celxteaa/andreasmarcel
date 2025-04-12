@@ -6,9 +6,9 @@
     <title>Profile</title>
     <style>
         body {
-            background-color: black;
+            background-color: rgb(0, 7, 99);
             color: lime;
-            font-family: monospace;
+            font-family: "Roboto Mono", monospace;
             margin: 0;
             padding: 20px;
         }
@@ -51,14 +51,15 @@
     <div class="profile" id="profile">
         <h1 style="color: azure;">Andreas Marcelino Yuwana</h1>
         <p style="color: azure;">Web Developer | Tech Enthusiast</p>
+        
 
     <!-- Add input and output command prompt -->
 <div id="command-prompt" style="display: none; margin-top: 20px;">
     <label for="user-input" style="color: rgb(255, 255, 255);">User $ </label>
-    <input id="user-input" type="text" style="background-color: rgb(88, 87, 87); color: rgb(255, 255, 255); border: none; outline: none; font-family: monospace; width: 80%;" />
+    <input id="user-input" type="text" style="background-color: rgb(88, 87, 87); color: rgb(255, 238, 0); border: none; outline: none; font-family: monospace; width: 80%;" />
     <div id="output" style="margin-top: 10px; color: rgb(255, 255, 255);"></div>
 </div>
-
+<p style="color: rgb(0, 217, 255);">Type <span style="color: rgb(251, 255, 0);">'help'</span> for a list of commands.</p>
 <!-- Modal for displaying the certificate -->
 <div id="certificate-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); justify-content: center; align-items: center; z-index: 1000;">
     <img id="modal-image" src="" alt="Certificate" style="max-width: 90%; max-height: 90%; border: 2px solid white;">
