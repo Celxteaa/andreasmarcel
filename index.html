@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfolio of Andreas Marcelino Yuwana, an Information Systems student specializing in web development and IT support.">
+    <meta property="og:title" content="Andreas Marcelino — Portfolio">
+    <meta property="og:description" content="Explore my projects in Web Development.">
+    <meta property="og:image" content="favicon.png">
+    <link rel="canonical" href="[https://andreasmarcel.my.id/index.html](https://andreasmarcel.my.id/index.html)">
+    <title>Andreas Marcelino Yuwana</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;700&family=Space+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* ==========================================================================
+           1. MODERN MODERN CLASSMORPHISM SYSTEM
+           ========================================================================== */
+        :root {
+            --bg-gradient: radial-gradient(circle at 50% 50%, #111424 0%, #06070c 100%);
+            --glass-surface: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.07);
+            --glass-border-active: rgba(255, 255, 255, 0.25);
+            
+            --text-pure: #ffffff;
+            --text-muted: #94a3b8;
+            --accent-glow: rgba(99, 102, 241, 0.15);
+            --accent-color: #6366f1; /* Premium Royal Indigo */
+            
+            --font-display: 'Plus Jakarta Sans', sans-serif;
+            --font-body: 'Space Grotesk', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+            --easing-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            color: var(--text-pure);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            height: 100vh;
+            display: flex;
+        }
+
+        /* Ambient Fluid Light Canvas Backdrop */
+        #bg-canvas {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.4;
+        }
+
+        /* ==========================================================================
+           2. MAIN APP CONTENT FRAMEWORK
+           ========================================================================== */
+        .app-container {
+            display: flex;
+            width: 100%;
+            height: 100vh;
+            padding: 40px;
+            gap: 40px;
+            z-index: 10;
+            position: relative;
+        }
+
+        /* LEFT NAVIGATION GLASS BLOCK */
+        .control-sidebar {
+            width: 320px;
+            background: var(--glass-surface);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 50px 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            flex-shrink: 0;
+        }
+
+        .identity-block h1 {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .identity-block p {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 8px;
+        }
+
+        .terminal-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 40px 0;
+        }
+
+        /* PERBAIKAN UTAMA: Navigasi Kokoh Tanpa Melebar/Menyempit */
+        .menu-node {
+            position: relative; /* Wajib untuk absolute positioning panah */
+            display: block;
+            text-align: left;
+            padding: 16px 45px 16px 20px; /* Beri padding kanan luas (45px) agar teks tidak menabrak panah */
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.4s var(--easing-smooth);
+            cursor: pointer;
+            width: 100%;
+            white-space: nowrap; /* Mencegah teks patah menjadi 2 baris */
+            overflow: hidden;
+            text-overflow: ellipsis; /* Jika sangat sempit, teks memotong dengan anggun (...) */
+        }
+
+        /* Mengunci posisi panah agar tidak mendorong struktur tombol */
+        .menu-node .node-indicator {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%) translateX(-5px); /* Tengah secara vertikal */
+            font-size: 0.8rem;
+            opacity: 0;
+            transition: all 0.4s var(--easing-smooth);
+            pointer-events: none;
+        }
+
+        .menu-node:hover, .menu-node.active-node {
+            color: var(--text-pure);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--glass-border-active);
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.1);
+        }
+
+        .menu-node:hover .node-indicator, .menu-node.active-node .node-indicator {
+            opacity: 1;
+            transform: translateY(-50%) translateX(0); /* Tetap di tengah vertikal saat bergerak */
+            color: var(--accent-color);
+        }
+
+        .sidebar-footer {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+            font-family: var(--font-mono);
+            line-height: 1.6;
+        }
+
+        /* RIGHT CENTRAL VIEWPORT HUB */
+        .display-hub {
+            flex-grow: 1;
+            background: var(--glass-surface);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 24px;
+            position: relative;
+            overflow-y: auto;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .display-hub::-webkit-scrollbar { width: 6px; }
+        .display-hub::-webkit-scrollbar-track { background: transparent; }
+        .display-hub::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 10px; }
+        .display-hub::-webkit-scrollbar-thumb:hover { background: var(--glass-border-active); }
+
+        /* ==========================================================================
+           3. VIEWPORT ENGINE SMOOTH SLIDE TRANSITIONS
+           ========================================================================== */
+        .hub-viewport {
+            padding: 60px;
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s var(--easing-smooth);
+        }
+
+        .hub-viewport.active-view {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .viewport-header {
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .viewport-header h2 {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .viewport-header h2 span {
+            color: var(--accent-color);
+        }
+
+        .viewport-header .sys-status-tag {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+        }
+
+        /* ==========================================================================
+           SECTION 1: OVERVIEW & PROFILE
+           ========================================================================== */
+        .profile-matrix {
+            display: grid;
+            grid-template-columns: 180px 1fr;
+            gap: 40px;
+            align-items: flex-start;
+            margin-bottom: 50px;
+        }
+
+        .avatar-glitch-vault {
+            width: 180px; height: 180px;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border-active);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .avatar-glitch-vault img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            filter: none; 
+        }
+
+        .typewriter-terminal-box {
+            font-family: var(--font-mono);
+            min-height: 120px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: inset 0 0 20px rgba(255,255,255,0.01);
+        }
+        
+        .typewriter-line {
+            display: block;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            color: var(--text-pure);
+            min-height: 1.8rem;
+        }
+        
+        .typewriter-line.active-line::after {
+            content: '▎';
+            color: var(--accent-color);
+            animation: blink 0.8s infinite;
+        }
+        
+        @keyframes blink { 50% { opacity: 0; } }
+
+        .profile-bio p {
+            color: var(--text-muted);
+            line-height: 1.8;
+            font-size: 1.05rem;
+            text-align: justify;
+        }
+
+        .matrix-skills-box {
+            border: 1px solid var(--glass-border);
+            background: rgba(255, 255, 255, 0.01);
+            border-radius: 20px;
+            padding: 35px;
+        }
+
+        .matrix-skills-box h4 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: var(--text-pure);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .matrix-skills-box h4 i { color: var(--accent-color); }
+
+        .skills-hud-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .hud-skill-item {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .hud-skill-meta {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .hud-skill-label { display: flex; align-items: center; gap: 12px; font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--text-pure); }
+        .hud-skill-label i { color: var(--text-muted); font-size: 1rem; }
+        
+        .tech-progress-bar-wrap {
+            width: 100%; height: 6px; background: rgba(255,255,255,0.05); border-radius: 10px; overflow: hidden; position: relative;
+        }
+        .tech-progress-line {
+            height: 100%; background: linear-gradient(90deg, var(--accent-color) 0%, #818cf8 100%); border-radius: 10px; width: 0%;
+            transition: width 1.5s var(--easing-smooth);
+        }
+
+        /* ==========================================================================
+           SECTION 2: PROJECTS CYBER CORES
+           ========================================================================== */
+        .terminal-filter-strip {
+            display: flex; gap: 10px; margin-bottom: 35px;
+        }
+
+        .filter-node-btn {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--glass-border);
+            color: var(--text-muted);
+            padding: 10px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-family: var(--font-display);
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all 0.3s var(--easing-smooth);
+        }
+
+        .filter-node-btn:hover, .filter-node-btn.active-filter {
+            border-color: var(--glass-border-active);
+            color: var(--text-pure);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+
+        .cyber-grid-projects {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        .core-project-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            min-height: 440px;
+            transition: all 0.4s var(--easing-smooth);
+        }
+
+        .core-project-card:hover {
+            border-color: var(--glass-border-active);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 30px var(--accent-glow);
+        }
+
+        .core-img-deck {
+            position: relative;
+            height: 180px;
+            overflow: hidden;
+            background: rgba(0,0,0,0.2);
+        }
+
+        .core-img-deck img {
+            width: 100%; height: 100%; object-fit: cover;
+            filter: none; 
+            opacity: 0.85;
+            transition: all 0.5s var(--easing-smooth);
+        }
+
+        .core-project-card:hover .core-img-deck img {
+            opacity: 1;
+            transform: scale(1.03);
+        }
+
+        .core-deck-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(10, 11, 18, 0.6);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            display: flex; justify-content: center; align-items: center;
+            opacity: 0; transition: opacity 0.3s var(--easing-smooth);
+            gap: 15px;
+        }
+
+        .core-project-card:hover .core-deck-overlay { opacity: 1; }
+
+        .deck-action-icon {
+            width: 46px; height: 46px; 
+            border-radius: 50%;
+            border: 1px solid var(--glass-border-active); color: var(--text-pure);
+            background: rgba(255,255,255,0.1);
+            display: flex; justify-content: center; align-items: center;
+            text-decoration: none; font-size: 1rem; transition: all 0.3s var(--easing-smooth);
+            backdrop-filter: blur(10px);
+        }
+
+        .deck-action-icon:hover {
+            background: var(--text-pure);
+            color: #000;
+            transform: scale(1.1);
+        }
+
+        .core-project-details {
+            padding: 30px; display: flex; flex-direction: column; flex-grow: 1;
+        }
+
+        .core-proj-cat {
+            font-family: var(--font-mono);
+            font-size: 0.7rem; font-weight: 500;
+            color: var(--accent-color); text-transform: uppercase;
+            letter-spacing: 1px; margin-bottom: 10px;
+        }
+
+        .core-proj-title {
+            font-family: var(--font-display);
+            font-size: 1.3rem; font-weight: 700; margin-bottom: 12px; color: #fff;
+        }
+
+        .core-proj-desc {
+            color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;
+            margin-bottom: 24px; text-align: justify;
+        }
+
+        .core-proj-tags {
+            display: flex; gap: 8px; flex-wrap: wrap; margin-top: auto;
+        }
+
+        .core-proj-tags span {
+            font-family: var(--font-body);
+            font-size: 0.75rem; font-weight: 500; padding: 6px 14px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            color: var(--text-pure);
+        }
+
+        /* ==========================================================================
+           SECTION 3: CREDENTIALS VAULT
+           ========================================================================== */
+        .hud-cert-list { display: flex; flex-direction: column; gap: 20px; }
+
+        .hud-cert-node {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 25px 30px;
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 25px; transition: all 0.4s var(--easing-smooth);
+        }
+
+        .hud-cert-node:hover {
+            border-color: var(--glass-border-active);
+            background: rgba(255, 255, 255, 0.04);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .cert-meta-core { display: flex; align-items: center; gap: 25px; width: 100%; }
+
+        .cert-hud-thumb {
+            width: 120px; height: 80px; flex-shrink: 0;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            overflow: hidden; cursor: pointer; position: relative;
+            background: rgba(0,0,0,0.1);
+        }
+
+        .cert-hud-thumb img { width: 100%; height: 100%; object-fit: cover; filter: none; opacity: 0.9; transition: all 0.3s; }
+        .cert-hud-thumb:hover img { opacity: 1; transform: scale(1.05); }
+
+        .cert-hud-info h3 { font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 6px; }
+        .cert-hud-issuer { font-family: var(--font-body); font-size: 0.8rem; font-weight: 600; color: var(--accent-color); text-transform: uppercase; letter-spacing: 0.5px; }
+        .cert-hud-date { font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); margin-top: 4px; }
+
+        .cert-action-anchor {
+            width: 44px; height: 44px;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border); color: var(--text-muted);
+            display: flex; justify-content: center; align-items: center;
+            text-decoration: none; transition: all 0.3s var(--easing-smooth); flex-shrink: 0;
+            background: rgba(255,255,255,0.02);
+        }
+
+        .hud-cert-node:hover .cert-action-anchor {
+            border-color: var(--glass-border-active); color: var(--text-pure);
+            background: rgba(255,255,255,0.05);
+        }
+
+        /* ==========================================================================
+           SECTION 4: GITHUB LIVE MONITOR
+           ========================================================================== */
+        .git-monitor-stack { display: flex; flex-direction: column; gap: 25px; }
+
+        .git-widget-frame {
+            background: rgba(255, 255, 255, 0.02); border: 1px solid var(--glass-border);
+            border-radius: 20px; padding: 30px;
+        }
+
+        .git-widget-frame-title {
+            display: flex; justify-content: space-between; align-items: center;
+            font-family: var(--font-display); font-size: 0.9rem; font-weight: 700;
+            text-transform: uppercase; color: var(--text-muted);
+            border-bottom: 1px solid var(--glass-border); padding-bottom: 18px; margin-bottom: 25px;
+        }
+
+        .git-widget-frame-title a { color: var(--text-pure); text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.3s; }
+        .git-widget-frame-title a:hover { color: var(--accent-color); }
+
+        .git-scroller { width: 100%; overflow-x: auto; padding: 10px 0; border-radius: 12px; background: rgba(0,0,0,0.15); padding: 20px; }
+        .git-scroller img { min-width: 600px; filter: invert(0) hue-rotate(0deg) brightness(1.1); }
+
+        .git-stats-split { display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; }
+        .git-stats-split div {
+            background: rgba(255, 255, 255, 0.02); border: 1px solid var(--glass-border);
+            border-radius: 20px; padding: 25px; display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .git-stats-split img { max-width: 100%; height: auto; filter: invert(0) brightness(1.1); }
+
+        /* ==========================================================================
+           SECTION 5: GATEWAY & LINKS
+           ========================================================================== */
+        .connect-twin-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
+
+        .terminal-edu-card {
+            background: rgba(255, 255, 255, 0.02); border: 1px solid var(--glass-border);
+            border-radius: 20px; padding: 30px; transition: all 0.4s var(--easing-smooth);
+        }
+
+        .terminal-edu-card:hover {
+            border-color: var(--glass-border-active);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .terminal-edu-card h3 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+        .terminal-edu-card p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; }
+
+        .comms-link-vault { display: flex; flex-direction: column; gap: 12px; }
+
+        .comms-anchor {
+            display: flex; align-items: center; justify-content: space-between;
+            border: 1px solid var(--glass-border); background: rgba(255, 255, 255, 0.02);
+            padding: 18px 24px; border-radius: 16px; text-decoration: none; color: var(--text-pure);
+            font-family: var(--font-display); font-size: 0.9rem; font-weight: 600;
+            transition: all 0.3s var(--easing-smooth);
+        }
+
+        .comms-anchor i.fa-chevron-right { color: var(--text-muted); font-size: 0.8rem; transition: transform 0.3s var(--easing-smooth); }
+
+        .comms-anchor:hover {
+            border-color: var(--glass-border-active);
+            background: rgba(255,255,255,0.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .comms-anchor:hover i.fa-chevron-right { transform: translateX(4px); color: var(--accent-color); }
+
+        /* ==========================================================================
+           6. PREMIUM IMAGE LIGHTBOX MODAL
+           ========================================================================== */
+        .terminal-lightbox {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(6, 7, 12, 0.9); backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px); z-index: 9999;
+            display: none; align-items: center; justify-content: center;
+            padding: 40px; opacity: 0; transition: opacity 0.4s ease;
+        }
+
+        .terminal-lightbox.open { display: flex; opacity: 1; }
+
+        .lightbox-panel-body { position: relative; max-width: 900px; width: 100%; transform: scale(0.95); transition: transform 0.4s var(--easing-smooth); }
+        .terminal-lightbox.open .lightbox-panel-body { transform: scale(1); }
+        .lightbox-panel-body img { width: 100%; height: auto; border-radius: 20px; border: 1px solid var(--glass-border-active); box-shadow: 0 30px 60px rgba(0,0,0,0.5); }
+
+        .lightbox-exit-control {
+            position: absolute; top: -50px; right: 0; color: var(--text-pure);
+            font-size: 0.8rem; font-weight: 600; cursor: pointer; font-family: var(--font-display);
+            border: 1px solid var(--glass-border); border-radius: 30px;
+            padding: 8px 20px; background: rgba(255,255,255,0.05); backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+        .lightbox-exit-control:hover { background: #fff; color: #000; }
+
+        /* ==========================================================================
+           7. ADAPTIVE RESPONSIVE GRID MATRIX (MOBILE BREAKPOINTS)
+           ========================================================================== */
+        @media (max-width: 1024px) {
+            body { height: auto; overflow-y: auto; }
+            .app-container { flex-direction: column; height: auto; padding: 20px; gap: 25px; }
+            .control-sidebar { width: 100%; padding: 35px 25px; }
+            .terminal-menu { flex-direction: row; flex-wrap: wrap; margin: 25px 0; gap: 12px; }
+            .menu-node { width: auto; padding: 12px 40px 12px 18px; }
+            .display-hub { height: auto; border-radius: 24px; }
+            .hub-viewport { padding: 40px 25px; }
+            .viewport-header h2 { font-size: 1.6rem; }
+            .cyber-grid-projects, .connect-twin-layout { grid-template-columns: 1fr; }
+            .profile-matrix { grid-template-columns: 1fr; gap: 25px; justify-items: center; text-align: center; }
+            .profile-bio p { text-align: center; }
+            .hud-cert-node { flex-direction: column; align-items: flex-start; padding: 25px; }
+            .cert-meta-core { flex-direction: column; align-items: flex-start; gap: 20px; }
+            .cert-hud-thumb { width: 100%; height: 160px; }
+            .cert-action-anchor { align-self: flex-end; }
+            .git-stats-split { grid-template-columns: 1fr; }
+        }
+
+
+        /* Tech Scrolling Bar */
+.tech-marquee-container {
+    width: 100%;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 15px 0;
+    margin-top: 25px;
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.tech-marquee-track {
+    display: flex;
+    white-space: nowrap;
+    animation: marquee-scroll 20s linear infinite;
+    gap: 50px;
+}
+
+.tech-marquee-item {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+@keyframes marquee-scroll {
+    from { transform: translateX(100%); }
+    to { transform: translateX(-100%); }
+}
+
+
+/* Red Glitch Trigger Effect */
+.glitch-trigger {
+    animation: glitch-red 0.3s cubic-bezier(.25, .46, .45, .94) both;
+}
+
+@keyframes glitch-red {
+    0% { transform: translate(0); filter: hue-rotate(0deg); }
+    20% { transform: translate(-4px, 2px); filter: hue-rotate(90deg) saturate(5); }
+    40% { transform: translate(-4px, -2px); filter: hue-rotate(180deg) saturate(5); }
+    60% { transform: translate(4px, 2px); filter: hue-rotate(270deg) saturate(5); }
+    100% { transform: translate(0); filter: hue-rotate(0deg); }
+}
+    </style>
+</head>
+<body>
+
+    <canvas id="bg-canvas"></canvas>
+
+    <div class="app-container">
+
+        <aside class="control-sidebar">
+            <div class="identity-block">
+                <h1>Marcel</h1>
+                <p>Welcome to my Tech Space</p>
+            </div>
+
+            <nav class="terminal-menu">
+                <button class="menu-node active-node" onclick="switchTerminalView('overview', this)">
+                    Overview <span class="node-indicator"><i class="fa-solid fa-arrow-right"></i></span>
+                </button>
+                <button class="menu-node" onclick="switchTerminalView('projects', this)">
+                    Work <span class="node-indicator"><i class="fa-solid fa-arrow-right"></i></span>
+                </button>
+                <button class="menu-node" onclick="switchTerminalView('credentials', this)">
+                    Credentials <span class="node-indicator"><i class="fa-solid fa-arrow-right"></i></span>
+                </button>
+                <button class="menu-node" onclick="switchTerminalView('metrics', this)">
+                    Github Activity <span class="node-indicator"><i class="fa-solid fa-arrow-right"></i></span>
+                </button>
+                <button class="menu-node" onclick="switchTerminalView('connect', this)">
+                    Contact <span class="node-indicator"><i class="fa-solid fa-arrow-right"></i></span>
+                </button>
+            </nav>
+
+            <div class="sidebar-footer">
+                INDONESIA // MARCEL // 2026
+            </div>
+        </aside>
+
+        <main class="display-hub">
+
+            <section id="overview" class="hub-viewport active-view">
+                <div class="viewport-header">
+                    <h2>HOME // <span>Andreas Marcel</span></h2>
+                    <span class="sys-status-tag" id="live-clock"></span>
+                </div>
+
+                <div class="profile-matrix">
+                    <div class="avatar-glitch-vault">
+                        <img src="me1.jpg" alt="Andreas Marcelino">
+                    </div>
+                    <div class="profile-bio">
+                        <div class="typewriter-terminal-box">
+                            <span class="typewriter-line" id="line-1"></span>
+                            <span class="typewriter-line" id="line-2"></span>
+                            <span class="typewriter-line" id="line-3"></span>
+                        </div>
+                        <p>
+                            My interest in web development is grounded in the goal of creating tools that are truly functional. My development process is iterative, I build, test, and refine to ensure that every component I create is stable and logical. I believe that good technology should be intuitive for the user, allowing the underlying complexity to remain out of sight.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="tech-marquee-container">
+    <div class="tech-marquee-track">
+        <div class="tech-marquee-item"><i class="fa-brands fa-python"></i> Python</div>
+        <div class="tech-marquee-item"><i class="fa-brands fa-html5"></i> HTML/CSS</div>
+        <div class="tech-marquee-item"><i class="fa-solid fa-microchip"></i> Arduino</div>
+        <div class="tech-marquee-item"><i class="fa-solid fa-code"></i> C++</div>
+        <div class="tech-marquee-item"><i class="fa-brands fa-js"></i> JavaScript</div>
+        <div class="tech-marquee-item"><i class="fa-solid fa-database"></i> SQL</div>
+        <div class="tech-marquee-item"><i class="fa-brands fa-flutter"></i> Flutter</div>
+        <div class="tech-marquee-item"><i class="fa-solid fa-database"></i> Supabase</div>
+        <div class="tech-marquee-item"><i class="fa-solid fa-database"></i> MySQL</div>
+        <div class="tech-marquee-item"><i class="fa-solid fa-robot"></i> AI Integration</div>
+    </div>
+</div>
+
+                <div class="matrix-skills-box">
+                    <h4><i class="fa-solid fa-layer-group"></i> TECHNICAL SKILLS</h4>
+                    <div class="skills-hud-grid">
+                        <div class="hud-skill-item">
+                            <div class="hud-skill-meta">
+                                <span class="hud-skill-label"><i class="fa-solid fa-microchip"></i> Basic Computer Architecture</span>
+                            </div>
+                            <div class="tech-progress-bar-wrap"><div class="tech-progress-line" data-percent="65%"></div></div>
+                        </div>
+                        <div class="hud-skill-item">
+                            <div class="hud-skill-meta">
+                                <span class="hud-skill-label"><i class="fa-solid fa-sliders"></i> Software & OS</span>
+                            </div>
+                            <div class="tech-progress-bar-wrap"><div class="tech-progress-line" data-percent="80%"></div></div>
+                        </div>
+                        <div class="hud-skill-item">
+                            <div class="hud-skill-meta">
+                                <span class="hud-skill-label"><i class="fa-solid fa-globe"></i> Web Development</span>
+                            </div>
+                            <div class="tech-progress-bar-wrap"><div class="tech-progress-line" data-percent="85%"></div></div>
+                        </div>
+                        <div class="hud-skill-item">
+                            <div class="hud-skill-meta">
+                                <span class="hud-skill-label"><i class="fa-brands fa-html5"></i> Advanced HTML & CSS</span>
+                            </div>
+                            <div class="tech-progress-bar-wrap"><div class="tech-progress-line" data-percent="90%"></div></div>
+                        </div>
+                        <div class="hud-skill-item">
+                            <div class="hud-skill-meta">
+                                <span class="hud-skill-label"><i class="fa-brands fa-python"></i> Basic Python</span>
+                            </div>
+                            <div class="tech-progress-bar-wrap"><div class="tech-progress-line" data-percent="55%"></div></div>
+                        </div>
+                        <div class="hud-skill-item">
+                            <div class="hud-skill-meta">
+                                <span class="hud-skill-label"><i class="fa-solid fa-code"></i> Basic C++</span>
+                            </div>
+                            <div class="tech-progress-bar-wrap"><div class="tech-progress-line" data-percent="60%"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="projects" class="hub-viewport">
+                <div class="viewport-header">
+                    <h2>DEVELOPMENT // <span>PROJECTS</span></h2>
+                    <span class="sys-status-tag">PROJECTS</span>
+                </div>
+
+                <div class="terminal-filter-strip">
+                    <button class="filter-node-btn active-filter" onclick="filterCyberProjects('all', this)">All</button>
+                    <button class="filter-node-btn" onclick="filterCyberProjects('web', this)">Web Apps</button>
+                    <button class="filter-node-btn" onclick="filterCyberProjects('IoT', this)">IoT Projects</button>
+                    <button class="filter-node-btn" onclick="filterCyberProjects('Mobile', this)">Mobile Apps</button>
+                </div>
+
+                <div class="cyber-grid-projects">
+                    <div class="core-project-card" data-cat="IoT">
+                        <div class="core-img-deck">
+                            <img src="https://i.imgur.com/DsP6vXf.jpeg" alt="Alarm Gempa">
+                            <div class="core-deck-overlay">
+                                <a href="https://github.com/Celxteaa/Alarm-Gempa-API-BMKG" target="_blank" class="deck-action-icon"><i class="fa-solid fa-link"></i></a>
+                                <a href="https://github.com/Celxteaa/Alarm-Gempa-API-BMKG" target="_blank" class="deck-action-icon"><i class="fa-brands fa-github"></i></a>
+                            </div>
+                        </div>
+                        <div class="core-project-details">
+                            <div class="core-proj-cat">IoT</div>
+                            <h3 class="core-proj-title">Alarm Gempa API BMKG</h3>
+                            <p class="core-proj-desc">Perangkat mikrokontroler ESP8266 yang mengintegrasikan data gempa dari BMKG untuk memberikan peringatan dini kepada pengguna melalui suara peringatan buzzer.</p>
+                            <div class="core-proj-tags"><span>Internet of Things</span><span>API Integration</span><span>Arduino</span></div>
+                        </div>
+                    </div>
+
+                    <div class="core-project-card" data-cat="web">
+                        <div class="core-img-deck">
+                            <img src="https://i.imgur.com/iDFuAmk.png" alt="LinkIT Support">
+                            <div class="core-deck-overlay">
+                                <a href="https://linkitsupport.vercel.app/" target="_blank" class="deck-action-icon"><i class="fa-solid fa-eye"></i></a>
+                            </div>
+                        </div>
+                        <div class="core-project-details">
+                            <div class="core-proj-cat">Web Application</div>
+                            <h3 class="core-proj-title">LinkIT Support</h3>
+                            <p class="core-proj-desc">Sistem manajemen tiket IT Support berbasis web yang dirancang untuk menjembatani komunikasi antara pengguna (karyawan/klien) dengan tim teknisi IT secara efisien dan transparan.</p>
+                            <div class="core-proj-tags"><span>IT Ticketing</span><span>IT Support</span><span>Web App</span></div>
+                        </div>
+                    </div>
+
+                    <div class="core-project-card" data-cat="web">
+                        <div class="core-img-deck">
+                            <img src="https://i.imgur.com/dzKhMA1.png" alt="CelxSync">
+                            <div class="core-deck-overlay">
+                                <a href="https://celxsync.vercel.app/" target="_blank" class="deck-action-icon"><i class="fa-solid fa-eye"></i></a>
+                            </div>
+                        </div>
+                        <div class="core-project-details">
+                            <div class="core-proj-cat">Web Application</div>
+                            <h3 class="core-proj-title">CelxSync</h3>
+                            <p class="core-proj-desc">Web application yang dirancang untuk mempermudah berbagi file dan melakukan siaran layar secara massal dalam WIFI/jaringan yang sama melalui ruangan (room).</p>
+                            <div class="core-proj-tags"><span>File Streams</span><span>Screen Sharing</span><span>P2P Hub</span></div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="core-project-card" data-cat="Mobile">
+                        <div class="core-img-deck">
+                            <div style="background: linear-gradient(135deg, #1e1b4b 0%, #311042 100%); width:100%; height:100%; display:flex; justify-content:center; align-items:center; color:rgba(255,255,255,0.4); font-size:4rem;"><i class="fa-solid fa-window-restore"></i></div>
+                            <div class="core-deck-overlay">
+                                <span style="color:#fff; font-family:var(--font-display); font-weight:600; font-size:0.85rem;">INTERNAL BUSINESS PLATFORM</span>
+                            </div>
+                        </div>
+                        <div class="core-project-details">
+                            <div class="core-proj-cat">Mobile App</div>
+                            <h3 class="core-proj-title">LumePOS Thermal Edition</h3>
+                            <p class="core-proj-desc">Aplikasi kasir (Point of Sale) desktop terintegrasi langsung dengan hardware cetak struk thermal printer dan manajemen stok barang.</p>
+                            <div class="core-proj-tags"><span>POS Base v6</span><span>Hardware Printing</span><span>Inventory</span></div>
+                        </div>
+                    </div> -->
+
+                    <!-- <div class="core-project-card" data-cat="IoT">
+                        <div class="core-img-deck">
+                            <div style="background: linear-gradient(135deg, #064e3b 0%, #111827 100%); width:100%; height:100%; display:flex; justify-content:center; align-items:center; color:rgba(255,255,255,0.4); font-size:4rem;"><i class="fa-solid fa-diagram-project"></i></div>
+                            <div class="core-deck-overlay">
+                                <span style="color:#fff; font-family:var(--font-display); font-weight:600; font-size:0.85rem;">CISCO INFRASTRUCTURE</span>
+                            </div>
+                        </div>
+                        <div class="core-project-details">
+                            <div class="core-proj-cat">Networking Node</div>
+                            <h3 class="core-proj-title">Simulasi Infrastruktur LAN</h3>
+                            <p class="core-proj-desc">Perancangan arsitektur jaringan lokal menggunakan Cisco Packet Tracer termasuk pengujian fungsionalitas media transmisi kabel.</p>
+                            <div class="core-proj-tags"><span>Packet Tracer</span><span>Network Architecture</span><span>LAN Link</span></div>
+                        </div>
+                    </div> -->
+                </div>
+            </section>
+
+            <section id="credentials" class="hub-viewport">
+                <div class="viewport-header">
+                    <h2>CREDENTIALS // <span>Certificates</span></h2>
+                    <span class="sys-status-tag">VERIFIED ARTIFACTS</span>
+                </div>
+
+                <div class="hud-cert-list">
+                    <div class="hud-cert-node">
+                        <div class="cert-meta-core">
+                            <div class="cert-hud-thumb" onclick="deployLightboxView('https://s3.amazonaws.com/coursera_assets/meta_images/generated/CERTIFICATE_LANDING_PAGE/CERTIFICATE_LANDING_PAGE~ZFEVL8KAJ7U1/CERTIFICATE_LANDING_PAGE~ZFEVL8KAJ7U1.jpeg')">
+                                <img src="https://s3.amazonaws.com/coursera_assets/meta_images/generated/CERTIFICATE_LANDING_PAGE/CERTIFICATE_LANDING_PAGE~ZFEVL8KAJ7U1/CERTIFICATE_LANDING_PAGE~ZFEVL8KAJ7U1.jpeg" alt="Google IT Support">
+                            </div>
+                            <div class="cert-hud-info">
+                                <div class="cert-hud-issuer">Google</div>
+                                <h3>Google IT Support Professional Certificate</h3>
+                                <div class="cert-hud-date">Diterbitkan: April 2025 • Validitas: Permanent</div>
+                            </div>
+                        </div>
+                        <a href="https://coursera.org/verify/professional-cert/ZFEVL8KAJ7U1" target="_blank" class="cert-action-anchor"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                    </div>
+
+                    <div class="hud-cert-node">
+                        <div class="cert-meta-core">
+                            <div class="cert-hud-thumb" onclick="deployLightboxView('https://i.imgur.com/SuNQ96s.png')">
+                                <img src="https://i.imgur.com/SuNQ96s.png" alt="Dicoding Python">
+                            </div>
+                            <div class="cert-hud-info">
+                                <div class="cert-hud-issuer">Dicoding</div>
+                                <h3>Memulai Pemrograman dengan Python</h3>
+                                <div class="cert-hud-date">Diterbitkan: Feb 2025 • Kedaluwarsa: Feb 2028</div>
+                            </div>
+                        </div>
+                        <a href="https://dicoding.com/certificates/07Z633D3YZQR" target="_blank" class="cert-action-anchor"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                    </div>
+
+                    
+                </div>
+            </section>
+
+            <section id="metrics" class="hub-viewport">
+                <div class="viewport-header">
+                    <h2>ACTIVITY // <span>GitHub</span></h2>
+                    <span class="sys-status-tag">GitHub</span>
+                </div>
+
+                <div class="git-monitor-stack">
+                    <div class="git-widget-frame">
+                        <div class="git-widget-frame-title">
+                            <span>GitHub Contribution Activity</span>
+                            <a href="https://github.com/Celxteaa" target="_blank">Open GitHub <i class="fa-solid fa-square-share-nodes"></i></a>
+                        </div>
+                        <div class="git-scroller">
+                            <img src="https://ghchart.rshah.org/6366f1/Celxteaa" alt="Github Kontribusi Engine">
+                        </div>
+                    </div>
+
+                    <div class="git-stats-split">
+                        <div>
+                            <img src="https://github-readme-stats.vercel.app/api?username=Celxteaa&show_icons=true&theme=transparent&title_color=ffffff&text_color=94a3b8&icon_color=6366f1&hide_border=true" alt="Statistik Komit GitHub">
+                        </div>
+                        <div>
+                            <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Celxteaa&layout=compact&theme=transparent&title_color=ffffff&text_color=94a3b8&hide_border=true" alt="Bahasa Terminal Utama">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="connect" class="hub-viewport">
+                <div class="viewport-header">
+                    <h2>CONTACT // <span>ME</span></h2>
+                    <span class="sys-status-tag">CONTACT</span>
+                </div>
+
+                <div class="connect-twin-layout">
+                    <div>
+                        <h3 style="font-family:var(--font-display); font-size:1rem; font-weight:700; margin-bottom:20px; color:var(--text-pure);">EDUCATION</h3>
+                        <a href="https://pddikti.kemdiktisaintek.go.id/detail-mahasiswa/jOJ2e5h5JA-wvXJF2puPLqqus3wBuK_4rwnh9pXH5GgGb-A1XkSShqJ0F-hlcYFdmNxT1w==" target="_blank" style="text-decoration:none;">
+                            <div class="terminal-edu-card">
+                                <h3>S1 Sistem Informasi</h3>
+                                <p style="color: var(--accent-color); font-weight:700; margin-bottom:6px;">Universitas Terbuka</p>
+                                <p>2023 — Now</p>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div>
+                        <h3 style="font-family:var(--font-display); font-size:1rem; font-weight:700; margin-bottom:20px; color:var(--text-pure);">COMMUNICATION</h3>
+                        <div class="comms-link-vault">
+                            <a href="mailto:andreasmarcel@proton.me" class="comms-anchor">
+                                <span><i class="fa-solid fa-envelope" style="color:var(--accent-color); margin-right:10px;"></i> andreasmarcel@proton.me</span><i class="fa-solid fa-chevron-right"></i>
+                            </a>
+                            <a href="https://github.com/Celxteaa" target="_blank" class="comms-anchor">
+                                <span><i class="fa-brands fa-github" style="color:var(--accent-color); margin-right:10px;"></i> GitHub</span><i class="fa-solid fa-chevron-right"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/in/andreas-marcelino-yuwana/" target="_blank" class="comms-anchor">
+                                <span><i class="fa-brands fa-linkedin" style="color:var(--accent-color); margin-right:10px;"></i> LinkedIn</span><i class="fa-solid fa-chevron-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <div class="terminal-lightbox" id="hudLightbox">
+        <div class="lightbox-panel-body">
+            <span class="lightbox-exit-control" onclick="shutLightboxView()">CLOSE PREVIEW</span>
+            <img src="" id="targetLightboxSrc" alt="Attachment Stream Open View">
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let blobs = [];
+        function initCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            blobs = [];
+            for (let i = 0; i < 4; i++) {
+                blobs.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    radius: Math.random() * 200 + 150,
+                    color: i % 2 === 0 ? 'rgba(99, 102, 241, 0.08)' : 'rgba(139, 92, 246, 0.05)',
+                    vx: (Math.random() - 0.5) * 1,
+                    vy: (Math.random() - 0.5) * 1
+                });
+            }
+        }
+
+        function drawFluidBackground() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.filter = 'blur(80px)';
+            
+            blobs.forEach(b => {
+                ctx.beginPath();
+                ctx.arc(b.x, b.y, b.radius, 0, Math.PI * 2);
+                ctx.fillStyle = b.color;
+                ctx.fill();
+
+                b.x += b.vx;
+                b.y += b.vy;
+
+                if (b.x < -b.radius || b.x > canvas.width + b.radius) b.vx *= -1;
+                if (b.y < -b.radius || b.y > canvas.height + b.radius) b.vy *= -1;
+            });
+            requestAnimationFrame(drawFluidBackground);
+        }
+
+        window.addEventListener('resize', initCanvas);
+        initCanvas();
+        drawFluidBackground();
+
+        // Single Page App Engine Transition Mechanics
+        // Single Page App Engine Transition Mechanics
+function switchTerminalView(targetViewId, clickedNode) {
+    // Menambah efek glitch saat tombol ditekan
+    document.body.classList.add('glitch-trigger');
+    setTimeout(() => document.body.classList.remove('glitch-trigger'), 300);
+
+    document.querySelectorAll('.menu-node').forEach(node => node.classList.remove('active-node'));
+    clickedNode.classList.add('active-node');
+
+    const openView = document.querySelector('.hub-viewport.active-view');
+    if (openView) {
+        openView.style.opacity = '0';
+        openView.style.transform = 'translateY(15px)';
+        setTimeout(() => {
+            openView.classList.remove('active-view');
+            deployTargetViewport(targetViewId);
+        }, 300);
+    } else {
+        deployTargetViewport(targetViewId);
+    }
+}
+        
+
+        function deployTargetViewport(id) {
+            const nextView = document.getElementById(id);
+            if (nextView) {
+                nextView.classList.add('active-view');
+                if(id === 'overview') { animateProgressBars(); }
+                setTimeout(() => {
+                    nextView.style.opacity = '1';
+                    nextView.style.transform = 'translateY(0)';
+                }, 50);
+            }
+        }
+
+        // Skill Progress Line Bar Loader
+        function animateProgressBars() {
+            document.querySelectorAll('.tech-progress-line').forEach(line => {
+                const targetWidth = line.getAttribute('data-percent');
+                line.style.width = targetWidth;
+            });
+        }
+
+        // Product Catalog Filter Manager
+        function filterCyberProjects(category, btnSource) {
+            document.querySelectorAll('.filter-node-btn').forEach(btn => btn.classList.remove('active-filter'));
+            btnSource.classList.add('active-filter');
+
+            document.querySelectorAll('.core-project-card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    if (category === 'all' || card.getAttribute('data-cat') === category) {
+                        card.style.display = 'flex';
+                        setTimeout(() => { 
+                            card.style.opacity = '1'; 
+                            card.style.transform = 'scale(1)';
+                        }, 50);
+                    } else {
+                        card.style.display = 'none';
+                    }
+                }, 200);
+            });
+        }
+
+        // Glass Lightbox Vault Operations
+        const lightbox = document.getElementById('hudLightbox');
+        const lightboxImg = document.getElementById('targetLightboxSrc');
+
+        function deployLightboxView(imageUri) {
+            if (imageUri) {
+                lightboxImg.setAttribute('src', imageUri);
+                lightbox.classList.add('open');
+            }
+        }
+
+        function shutLightboxView() { lightbox.classList.remove('open'); }
+        lightbox.addEventListener('click', (e) => { if (e.target === lightbox) shutLightboxView(); });
+
+        // Additive Typewriter
+        const logsArray = [
+            " Andreas Marcelino Yuwana",
+            " Full Stack Web Developer",
+            " I build functional, scalable web solutions. My focus is on creating systems that streamline business operations without unnecessary complexity."
+        ];
+        
+        let lineIndex = 0;
+        let characterIndex = 0;
+
+        function runCumulativeTypewriter() {
+            if (lineIndex < logsArray.length) {
+                const currentLineElement = document.getElementById(`line-${lineIndex + 1}`);
+                const currentFullText = logsArray[lineIndex];
+
+                if (characterIndex === 0) {
+                    currentLineElement.classList.add('active-line');
+                }
+
+                if (characterIndex < currentFullText.length) {
+                    currentLineElement.textContent += currentFullText.charAt(characterIndex);
+                    characterIndex++;
+                    setTimeout(runCumulativeTypewriter, 40);
+                } else {
+                    currentLineElement.classList.remove('active-line');
+                    lineIndex++;
+                    characterIndex = 0;
+                    setTimeout(runCumulativeTypewriter, 300);
+                }
+            } else {
+                document.getElementById(`line-${logsArray.length}`).classList.add('active-line');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(runCumulativeTypewriter, 500);
+            setTimeout(animateProgressBars, 300);
+        });
+
+        
+        // jam
+        function updateClock() {
+    const now = new Date();
+    // Mengambil waktu dalam format WIB (Indonesia)
+    const timeString = now.toLocaleTimeString('id-ID', { 
+        hour: '2-digit', 
+        minute: '2-digit', 
+        second: '2-digit' 
+    });
+    
+    // Memperbarui teks pada elemen jam
+    const clockElement = document.getElementById('live-clock');
+    if (clockElement) {
+        clockElement.innerText = `${timeString}`;
+    }
+}
+
+// Menjalankan fungsi setiap 1 detik
+setInterval(updateClock, 1000);
+// Menjalankan sekali saat halaman dimuat agar tidak menunggu 1 detik pertama
+updateClock();
+        
+    </script>
+    <script type="application/ld+json">
+        {
+        "@context": "https://schema.org/",
+        "@type": "Person",
+        "name": "Andreas Marcelino Yuwana",
+        "jobTitle": "Web Developer & Information Systems Student",
+        "url": "https://andreasmarcel.my.id/index.html",
+        "description": "Information Systems student focused on building functional, iterative web solutions and IoT projects."
+        }
+</script>
+</body>
+</html>
